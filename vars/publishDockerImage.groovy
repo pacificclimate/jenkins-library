@@ -4,7 +4,7 @@
  * @param image to publish
  * @param tags list of tags to publish image with
  */
-def call(image, tags) {
+def call(image, ArraList tags) {
     withDockerServer([uri: PCIC_DOCKER]){
         docker.withRegistry('', 'PCIC_DOCKERHUB_CREDS') {
             tags.each { tag ->

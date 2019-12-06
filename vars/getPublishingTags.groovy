@@ -4,7 +4,7 @@
  *
  * @return tags a list of the tags for the image
  */
-def call() {
+def ArrayList call() {
     String tag = sh (script: 'git tag --contains', returnStdout: true).trim()
 
     def tags = []
