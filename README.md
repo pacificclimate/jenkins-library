@@ -1,2 +1,2 @@
-# jenkins-library
-PCIC Jenkins shared libary
+# PCIC Jenkins Pipeline Shared Library
+This repo contains the shared library for Jenkins.
