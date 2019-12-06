@@ -1,6 +1,6 @@
-def call(String image_name, String server_uri) {
+def call(String image_name) {
     def image
-    withDockerServer([uri: server_uri]) {
+    withDockerServer([uri: PCIC_DOCKER]) {
         image = docker.build(image_name)
     }
 
