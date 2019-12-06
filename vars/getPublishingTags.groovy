@@ -1,3 +1,9 @@
+/**
+ * If the master branch has been tagged we also add the `latest` tag.  Otherwise
+ * we just use the branch name as the tag.
+ *
+ * @return tags a list of the tags for the image
+ */
 def call() {
     String tag = sh (script: 'git tag --contains', returnStdout: true).trim()
 
