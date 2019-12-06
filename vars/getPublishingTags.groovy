@@ -2,23 +2,23 @@
  * If the master branch has been tagged we also add the `latest` tag.  Otherwise
  * we just use the branch name as the tag.
  *
- * @return tags a list of the tags for the image
+ * @return docker_tags a list of the tags for the Docker image
  */
 def ArrayList call() {
-    String tag = sh (script: 'git tag --contains', returnStdout: true).trim()
+    String git_tags = sh(script: 'git tag --contains', returnStdout: true).trim()
+    def docker_tags = []
 
-    def tags = []
-    if(BRANCH_NAME == 'master' && !tag.isEmpty()) {
+    if(BRANCH_NAME == 'master' && !git_tags.isEmpty()) {
         // It is possible for a commit to have multiple git tags. We want to
         // ensure we add all of them in.
-        tags.addAll(tag.split('\n'))
-        tags.add('latest')
+        docker_tags.addAll(git_tags.split('\n'))
+        docker_tags.add('latest')
     } else {
         String branch_name = get_branch_name()
-        tags.add(branch_name)
+        docker_tags.add(branch_name)
     }
 
-    return tags
+    return docker_tags
 }
 
 /**
