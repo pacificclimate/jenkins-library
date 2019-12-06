@@ -4,9 +4,9 @@
  * @param image_name the name of the image
  * @return image the built docker image
  */
-def call(String image_name='my-image') {
+def call(String image_name='my-image', server_uri=PCIC_DOCKER) {
     def image
-    withDockerServer([uri: PCIC_DOCKER]) {
+    withDockerServer([uri: server_uri]) {
         image = docker.build(image_name)
     }
 
