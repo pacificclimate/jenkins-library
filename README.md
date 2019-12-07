@@ -17,7 +17,7 @@ To use the library steps in a Jenkinsfile add the following line to the top of y
 ```
 @Library('pcic-pipeline-library')_
 ```
-NOTE: The `_` is not a typo and must be included.
+**NOTE:** The `_` is not a typo and must be included.
 
 ## Supported Steps
 The following table shows all of the currently supported steps.
