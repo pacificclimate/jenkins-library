@@ -31,10 +31,11 @@ The following table shows all of the currently supported steps.
 | [`removeLocalDockerImage`](https://github.com/pacificclimate/jenkins-library/blob/dev/vars/removeLocalDockerImage.groovy) | Removes the built Docker image from the server. |
 
 
-## Adding new steps
-All of the steps are located in the [`vars/`](https://github.com/pacificclimate/jenkins-library/tree/dev/vars) directory.  Each `.groovy` file corresponds to a step where the step name is the name of the file.  This is the name you would use in a `Jenkinsfile` to use the step.  In the file there **must** be a `call` method:
+## Adding Steps
+All of the steps are located in the [`vars/`](https://github.com/pacificclimate/jenkins-library/tree/dev/vars) directory.  Each `.groovy` file corresponds to a step where the step name is the name of the file.  This is the name you would use in a `Jenkinsfile` to use the step.  In the file there **must** be a `call` function:
 ```
 def call(...) {
     // some code
 }
 ```
+This is the function that gets called from the `Jenkinsfile`. Helper functions can be in the same file but generally any classes used are kept in a `src/` directory.
