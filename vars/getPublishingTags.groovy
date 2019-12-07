@@ -31,9 +31,9 @@ def ArrayList call() {
  *
  * @return name the name of the branch
  */
-def get_branch_name() {
+def String get_branch_name() {
     String name
-    
+
     if (BRANCH_NAME.contains('PR')) {
         name = CHANGE_BRANCH
     } else {
