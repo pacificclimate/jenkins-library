@@ -29,3 +29,12 @@ The following table shows all of the currently supported steps.
 | [`gitCheckout`](https://github.com/pacificclimate/jenkins-library/blob/dev/vars/gitCheckout.groovy) | Uses the standard `checkout scm` command (only available for multi-branch pipelines) along with a git fetch. |
 | [`publishDockerImage`](https://github.com/pacificclimate/jenkins-library/blob/dev/vars/publishDockerImage.groovy) | Publishes a docker image to a registry.  By default the name of the image should contain the registry to publish to in the form `your-registry/image-name:tag`.  There is an option to specify a registry with a URL. |
 | [`removeLocalDockerImage`](https://github.com/pacificclimate/jenkins-library/blob/dev/vars/removeLocalDockerImage.groovy) | Removes the built Docker image from the server. |
+
+
+## Adding new steps
+All of the steps are located in the [`vars/`](https://github.com/pacificclimate/jenkins-library/tree/dev/vars) directory.  Each `.groovy` file corresponds to a step where the step name is the name of the file.  This is the name you would use in a `Jenkinsfile` to use the step.  In the file there **must** be a `call` method:
+```
+def call(...) {
+    // some code
+}
+```
