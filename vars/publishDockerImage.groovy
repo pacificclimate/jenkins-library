@@ -6,7 +6,7 @@
  * @param server_uri URI of the docker server to build on
  * @param registry_url URL of a registry
  */
-def call(image, ArrayList tags, String server_uri = PCIC_DOCKER_DEV01, String registry_url = '', credentials) {
+def call(image, ArrayList tags, credentials, String server_uri = PCIC_DOCKER_DEV01, String registry_url = '') {
     withDockerServer([uri: server_uri]){
         docker.withRegistry(registry_url, credentials) {
             tags.each { tag ->
