@@ -6,7 +6,7 @@
  * @param server_uri URI of the docker server to build on
  * @return image the built docker image
  */
-def call(String image_name = 'my-image', String server_uri = PCIC_DOCKER_DEV01) {
+def call(String image_name, String server_uri = PCIC_DOCKER_DEV01) {
     def image
 
     withDockerServer([uri: server_uri]) {
