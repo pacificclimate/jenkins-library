@@ -1,7 +1,7 @@
 package pcic
 
 
-def getPipString(int pythonVersion) {
+static String getPipString(int pythonVersion) {
     String pip
     if (pythonVersion == 3) {
         pip = 'pip3'
@@ -13,7 +13,7 @@ def getPipString(int pythonVersion) {
 }
 
 
-static Map applyOptionalParameters(defaultMap, newMap) {
+static Map applyOptionalParameters(Map defaultMap, Map newMap) {
     def unknownKeys = (defaultMap.keySet() + newMap.keySet()) - defaultMap.keySet()
 
     if (unknownKeys.size() > 0) {
