@@ -1,3 +1,5 @@
+import pcic.utils
+
 /**
  * Given an image publish it with a tag to the PCIC docker registry.
  *
@@ -6,9 +8,12 @@
  * @param server_uri URI of the docker server to build on
  * @param registry_url URL of a registry
  */
-def call(image, ArrayList tags, credentials, String server_uri = PCIC_DOCKER_DEV01, String registry_url = '') {
-    withDockerServer([uri: server_uri]){
-        docker.withRegistry(registry_url, credentials) {
+def call(image, ArrayList tags, credentials, Map argMap=[:]) {
+    Map defaults = [server_uri: PCIC_DOCKER_DEV01, registry_url: '']
+    Map args = applyOptionalParameters(defaults, argMap)
+
+    withDockerServer([uri: args.server_uri]){
+        docker.withRegistry(args.registry_url, credentials) {
             tags.each { tag ->
                 image.push(tag)
             }
