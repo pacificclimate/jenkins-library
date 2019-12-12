@@ -13,7 +13,7 @@ def getPipString(int pythonVersion) {
 }
 
 
-def applyOptionalParameters(defaultMap, newMap) {
+static Map applyOptionalParameters(defaultMap, newMap) {
     def unknownKeys = (defaultMap.keySet() + newMap.keySet()) - defaultMap.keySet()
 
     if (unknownKeys.size() > 0) {
