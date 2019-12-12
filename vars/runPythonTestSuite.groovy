@@ -7,9 +7,15 @@ import pcic.utils
  * @param imageName name of python docker image
  * @param requirementsFiles list of requirements files to be installed
  * @param pytestArgs list of args to give pytest
- * @param argMap map containing any of the optional arguments (serverUri,
- *               pythonVersion, gitExecInstall, buildDocs, containerData,
-                 pipIndexUrl)
+ * @param argMap map containing any of the optional arguments:
+ *               serverUri: URI of the server to publish with
+ *               pythonVersion: Version of python being used in the project
+ *               gitExecInstall: Set to true if git executable needs to be
+ *                               installed
+ *               buildDocs: Set to true is sphinx docs need to be built
+ *               containerData: Generally left as default, `pdp` for pdp data
+ *                              from storage
+ *               pipIndexUrl: URL of pip index to use during installation
  */
 def call(String imageName, ArrayList requirementsFiles,  ArrayList pytestArgs, Map argMap=[:]) {
     // collect any optional variables
