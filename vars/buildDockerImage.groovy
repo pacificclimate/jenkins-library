@@ -8,8 +8,10 @@
  */
 def call(String imageName, String serverUri = PCIC_DOCKER_DEV01) {
     def image
+
     withDockerServer([uri: serverUri]) {
         image = docker.build(imageName)
     }
+    
     return image
 }

@@ -8,7 +8,7 @@ def ArrayList call() {
     String gitTags = sh(script: 'git tag --contains', returnStdout: true).trim()
     def dockerTags = []
 
-    if(branchName == 'master' && !gitTags.isEmpty()) {
+    if(BRANCH_NAME == 'master' && !gitTags.isEmpty()) {
         // It is possible for a commit to have multiple git tags. We want to
         // ensure we add all of them in.
         dockerTags.addAll(gitTags.split('\n'))
@@ -34,10 +34,10 @@ def ArrayList call() {
 def String getBranchName() {
     String name
 
-    if (branchName.contains('PR')) {
+    if (BRANCH_NAME.contains('PR')) {
         name = CHANGE_BRANCH
     } else {
-        name = branchName
+        name = BRANCH_NAME
     }
 
     return name
