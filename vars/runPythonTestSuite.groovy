@@ -1,4 +1,4 @@
-import pcic.utils
+import pcic.Utils
 
 
 def call(String imageName, ArrayList requirementsFiles,  ArrayList pytestArgs, Map argMap=[:]) {

@@ -22,3 +22,5 @@ def applyOptionalParameters(Map defaultMap, Map newMap) {
 
     return defaultMap + newMap
 }
+
+return this

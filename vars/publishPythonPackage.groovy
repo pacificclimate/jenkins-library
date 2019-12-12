@@ -1,4 +1,4 @@
-import pcic.utils
+import pcic.Utils
 
 
 def call(String imageName, String credentialsId, Map argMap=[:]) {
