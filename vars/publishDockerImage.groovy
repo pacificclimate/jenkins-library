@@ -9,7 +9,7 @@ import pcic.utils
  * @param registry_url URL of a registry
  */
 def call(image, ArrayList tags, credentials, Map argMap=[:]) {
-    Map defaults = [serverUri: PCIC_DOCKER_DEV01, registryUrl: '']
+    Map defaults = [serverUri: PCIC_DOCKER_DEV01, registryUrl: ' ']
     Map args = utils.applyOptionalParameters(defaults, argMap)
 
     withDockerServer([uri: args.serverUri]){
