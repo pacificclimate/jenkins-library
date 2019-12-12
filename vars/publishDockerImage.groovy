@@ -1,4 +1,4 @@
-import com.pcic.Utils
+import pcic.utils
 
 /**
  * Given an image publish it with a tag to the PCIC docker registry.
@@ -10,7 +10,7 @@ import com.pcic.Utils
  */
 def call(image, ArrayList tags, credentials, Map argMap=[:]) {
     Map defaults = [serverUri: PCIC_DOCKER_DEV01, registryUrl: '']
-    Map args = applyOptionalParameters(defaults, argMap)
+    Map args = utils.applyOptionalParameters(defaults, argMap)
 
     withDockerServer([uri: args.serverUri]){
         docker.withRegistry(args.registryUrl, credentials) {

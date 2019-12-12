@@ -1,4 +1,4 @@
-import pcic.Utils
+import pcic.utils
 
 
 def call(String imageName, ArrayList requirementsFiles,  ArrayList pytestArgs, Map argMap=[:]) {
@@ -9,10 +9,10 @@ def call(String imageName, ArrayList requirementsFiles,  ArrayList pytestArgs, M
                     buildDocs: false,
                     containerData: 'default',
                     pipIndexUrl:'https://pypi.pacificclimate.org/simple']
-    Map args = applyOptionalParameters(defaults, argMap)
+    Map args = utils.applyOptionalParameters(defaults, argMap)
 
     // set up some items used in the commands below
-    String pip = getPipString(args.pythonVersion)
+    String pip = utils.getPipString(args.pythonVersion)
     String required = '-r ' + requirementsFiles.join(' -r ')
     String testArgs = pytestArgs.join(' ')
     Map containerDataArgs = ['default': '-u root',

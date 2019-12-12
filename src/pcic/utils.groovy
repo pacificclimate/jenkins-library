@@ -1,4 +1,4 @@
-package com.pcic
+package pcic
 
 
 def getPipString(int pythonVersion) {

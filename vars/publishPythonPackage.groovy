@@ -1,4 +1,4 @@
-import pcic.Utils
+import pcic.utils
 
 
 def call(String imageName, String credentialsId, Map argMap=[:]) {
@@ -6,10 +6,10 @@ def call(String imageName, String credentialsId, Map argMap=[:]) {
     Map defaults = [pythonVersion: 3,
                     serverUri: PCIC_DOCKER_DEV01,
                     repoUrl: 'https://pypi.pacificclimate.org/']
-    Map args = applyOptionalParameters(defaults, argsMap)
+    Map args = utils.applyOptionalParameters(defaults, argsMap)
 
     // set up some items used in the commands below
-    String pip = getPipString(args.pythonVersion)
+    String pip = utils.getPipString(args.pythonVersion)
 
     withDockerServer([uri: args.serverUri]) {
         def pytainer = docker.image(imageName)
