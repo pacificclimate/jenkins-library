@@ -9,11 +9,11 @@ import pcic.utils
  * @param registry_url URL of a registry
  */
 def call(image, ArrayList tags, credentials, Map argMap=[:]) {
-    Map defaults = [server_uri: PCIC_DOCKER_DEV01, registry_url: '']
+    Map defaults = [serverUri: PCIC_DOCKER_DEV01, registryUrl: '']
     Map args = applyOptionalParameters(defaults, argMap)
 
-    withDockerServer([uri: args.server_uri]){
-        docker.withRegistry(args.registry_url, credentials) {
+    withDockerServer([uri: args.serverUri]){
+        docker.withRegistry(args.registryUrl, credentials) {
             tags.each { tag ->
                 image.push(tag)
             }
