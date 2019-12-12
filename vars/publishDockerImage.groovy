@@ -1,4 +1,4 @@
-import pcic.Utils
+import com.pcic.Utils
 
 /**
  * Given an image publish it with a tag to the PCIC docker registry.
