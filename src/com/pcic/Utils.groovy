@@ -1,4 +1,4 @@
-package pcic
+package com.pcic
 
 
 def getPipString(int pythonVersion) {
@@ -22,5 +22,3 @@ def applyOptionalParameters(Map defaultMap, Map newMap) {
 
     return defaultMap + newMap
 }
-
-return this
