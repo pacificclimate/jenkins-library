@@ -1,6 +1,13 @@
 import pcic.utils
 
-
+/**
+ * Publish python package to pypi
+ *
+ * @param imageName name of python image
+ * @param credentialsId  identification string of credentials in jenkins
+ * @param argMap map containing any of the optional arguments (pythonVersion,
+ *               serverUri, repoUrl)
+ */
 def call(String imageName, String credentialsId, Map argMap=[:]) {
     // collect any optional variables
     Map defaults = [pythonVersion: 3,

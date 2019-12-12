@@ -1,6 +1,16 @@
 import pcic.utils
 
 
+/**
+ * Run a python test suite along with any other required installs
+ *
+ * @param imageName name of python docker image
+ * @param requirementsFiles list of requirements files to be installed
+ * @param pytestArgs list of args to give pytest
+ * @param argMap map containing any of the optional arguments (serverUri,
+ *               pythonVersion, gitExecInstall, buildDocs, containerData,
+                 pipIndexUrl)
+ */
 def call(String imageName, ArrayList requirementsFiles,  ArrayList pytestArgs, Map argMap=[:]) {
     // collect any optional variables
     Map defaults = [serverUri: PCIC_DOCKER_DEV01,
