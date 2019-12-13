@@ -1,3 +1,6 @@
+import pcic.DockerUtils
+
+
 /**
  * Build a docker image given the name and server URI.  By default this function
  * will build this image on docker-dev01.
@@ -7,11 +10,6 @@
  * @return image the built docker image object
  */
 def call(String imageName, String serverUri = PCIC_DOCKER_DEV01) {
-    def image
-
-    withDockerServer([uri: serverUri]) {
-        image = docker.build(imageName, '--pull .')
-    }
-
-    return image
+    DockerUtils dockerUtils = new DockerUtils()
+    return dockerUtils.buildWithServer(imageName, serverUri)
 }
