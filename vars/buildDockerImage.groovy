@@ -10,6 +10,6 @@ import pcic.DockerUtils
  * @return image the built docker image object
  */
 def call(String imageName, String serverUri = PCIC_DOCKER_DEV01) {
-    DockerUtils dockerUtils = new DockerUtils(this)
+    def dockerUtils = new DockerUtils(this)
     return dockerUtils.buildWithServer(imageName, serverUri)
 }

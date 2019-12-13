@@ -5,19 +5,17 @@ import pcic.utils
 
 class DockerUtils implements Serializable {
 
-    private script
+    def script
 
     DockerUtils(script) {
         this.script = script
     }
 
-
-    @NonCPS
     public buildWithServer(String imageName, String serverUri) {
         def image
 
-        this.script.docker.withDockerServer([uri: serverUri]) {
-            image = docker.build(imageName, '--pull .')
+        script.docker.withDockerServer([uri: serverUri]) {
+            image = script.docker.build(imageName, '--pull .')
         }
 
         return image
