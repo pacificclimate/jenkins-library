@@ -5,6 +5,7 @@ import pcic.utils
 
 class DockerUtils implements Serializable {
 
+    @NonCPS
     public buildWithServer(String imageName, String serverUri) {
         def image
 
