@@ -1,4 +1,6 @@
-import pcic.utils
+import org.pcic.PythonUtils
+import org.pcic.DockerUtils
+import org.pcic.util.Utils
 
 
 /**
@@ -7,7 +9,7 @@ import pcic.utils
  * @param imageName name of python docker image
  * @param requirementsFiles list of requirements files to be installed
  * @param pytestArgs list of args to give pytest
- * @param argMap map containing any of the optional arguments:
+ * @param params map containing any of the optional arguments:
  *               serverUri: URI of the server to publish with
  *               pythonVersion: Version of python being used in the project
  *               gitExecInstall: Set to true if git executable needs to be
@@ -17,7 +19,11 @@ import pcic.utils
  *                              from storage
  *               pipIndexUrl: URL of pip index to use during installation
  */
-def call(String imageName, ArrayList requirementsFiles,  ArrayList pytestArgs, Map argMap=[:]) {
+def call(String imageName, ArrayList requirementsFiles, String pytestArgs, Map params=[:]) {
+    Utils utils = new Utils()
+    PythonUtils pytils = new PythonUtils(this)
+    DockerUtils dockerUtils = new DockerUtils(this)
+
     // collect any optional variables
     Map defaults = [serverUri: PCIC_DOCKER_DEV01,
                     pythonVersion: 3,
@@ -25,36 +31,37 @@ def call(String imageName, ArrayList requirementsFiles,  ArrayList pytestArgs, M
                     buildDocs: false,
                     containerData: 'default',
                     pipIndexUrl:'https://pypi.pacificclimate.org/simple']
-    Map args = utils.applyOptionalParameters(defaults, argMap)
+    Map processed = utils.processParams(defaults, params)
 
     // set up some items used in the commands below
-    String pip = utils.getPipString(args.pythonVersion)
-    String required = '-r ' + requirementsFiles.join(' -r ')
-    String testArgs = pytestArgs.join(' ')
-    Map containerDataArgs = ['default': '-u root',
-                             'pdp': '-u root --volumes-from pdp_data --env-file /storage/data/projects/comp_support/jenkins/pdp_envs/pdp_deployment.env']
+    String pip = pytils.getPipString(processed.pythonVersion)
+    Map containerDataArgs = dockerUtils.getContainerArgs(containerData)
 
-    withDockerServer([uri: args.serverUri]) {
+    withDockerServer([uri: proccessed.serverUri]) {
         def pytainer = docker.image(imageName)
 
-        pytainer.inside(containerDataArgs[args.containerData]) {
-            if (args.gitExecInstall) {
-                sh 'apt-get update'
-                sh 'apt-get install -y git'
+        pytainer.inside(containerDataArgs) {
+            if (proccessed.gitExecInstall) {
+                pytils.installGitExecutable()
+                // sh 'apt-get update'
+                // sh 'apt-get install -y git'
             }
 
-            withEnv(["PIP_INDEX_URL=${args.pipIndexUrl}"]) {
-                sh "${pip} install ${required}"
-                sh "${pip} install -e ."
+            withEnv(["PIP_INDEX_URL=${proccessed.pipIndexUrl}"]) {
+                pytils.installRequirements(pip, requirementsFiles)
+                // sh "${pip} install ${required}"
+                // sh "${pip} install -e ."
             }
 
-            if (args.buildDocs) {
-                sh 'python setup.py install'
-                sh 'python setup.py build_sphinx'
-                sh 'python setup.py install'
+            if (proccessed.buildDocs) {
+                pytils.buildDocs()
+                // sh 'python setup.py install'
+                // sh 'python setup.py build_sphinx'
+                // sh 'python setup.py install'
             }
 
-            sh "py.test ${testArgs}"
+            pytils.runPytest(pytestArgs)
+            // sh "py.test ${pytestArgs}"
         }
     }
 }

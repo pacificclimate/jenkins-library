@@ -1,4 +1,4 @@
-import pcic.utils
+import org.pcic.util.Utils
 
 
 /**
@@ -11,12 +11,13 @@ import pcic.utils
  *              serverUri: URI of the server to publish with
  *              registryUrl: URL of the registry
  */
-def call(image, ArrayList tags, credentialsId, Map argMap=[:]) {
+def call(image, ArrayList tags, credentialsId, Map params=[:]) {
+    Utils utils = new Utils()
     Map defaults = [serverUri: PCIC_DOCKER_DEV01, registryUrl: '']
-    Map args = utils.applyOptionalParameters(defaults, argMap)
+    Map processed = utils.processParams(defaults, params)
 
-    withDockerServer([uri: args.serverUri]){
-        docker.withRegistry(args.registryUrl, credentialsId) {
+    withDockerServer([uri: processed.serverUri]){
+        docker.withRegistry(processed.registryUrl, credentialsId) {
             tags.each { tag ->
                 image.push(tag)
             }

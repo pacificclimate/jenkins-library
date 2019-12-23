@@ -1,3 +1,6 @@
+import org.pcic.NodeUtils
+
+
 /**
  * Install node packages and run test command
  *
@@ -5,8 +8,8 @@
  * @param command test command to run
  */
 def call(String node, String command) {
+    NodeUtils nodeUtils = new NodeUtils(this)
     nodejs(node) {
-        sh 'npm install'
-        sh "npm run ${command}"
+        nodeUtils.installAndRun(command)
     }
 }
