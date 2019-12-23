@@ -9,7 +9,7 @@ class GitUtils implements Serializable {
     }
 
     ArrayList isCommitTagged() {
-        String gitTags = steps.sh(script: 'git contains --tags', returnStdOut: true)
+        String gitTags = steps.sh(script: 'git tag --contains', returnStdOut: true)
         ArrayList retTags
 
         if (!gitTags.isEmpty()) {
