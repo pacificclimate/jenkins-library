@@ -43,3 +43,8 @@ def call(...) {
 }
 ```
 This is the function that gets called from the `Jenkinsfile`. Helper functions can be in the same file but generally any classes used are kept in a `src/` directory.
+
+## Tests
+```
+$ gradle test
+```
