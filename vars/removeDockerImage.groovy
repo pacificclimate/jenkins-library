@@ -1,7 +1,7 @@
 import org.pcic.DockerUtils
 
 /**
- * Clean up image on dev01
+ * Remove image from docker-dev01
  *
  * @param image_name name of the image to clean up
  * @param server_uri URI of the docker server to build on

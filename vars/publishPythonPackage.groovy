@@ -6,11 +6,11 @@ import org.pcic.util.Utils
  * Publish python package to pypi
  *
  * @param imageName name of python image
- * @param credentialsId  identification string of credentials in jenkins
+ * @param credentialsId identification string of credentials in jenkins
  * @param params map containing any of the optional arguments:
- *              pythonVersion: Version of python being used in the project
- *              serverUri: URI of the server to publish with
- *              pypiUrl: URL of the pypi server to push to
+ *               pythonVersion: Version of python being used in the project
+ *               serverUri: URI of the server to publish with
+ *               pypiUrl: URL of the pypi server to push to
  */
 def call(String imageName, String credentialsId, Map params=[:]) {
     Utils utils = new Utils(this)

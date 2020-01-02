@@ -8,7 +8,7 @@ import org.pcic.util.Utils
  *
  * @param imageName name of python docker image
  * @param requirementsFiles list of requirements files to be installed
- * @param pytestArgs list of args to give pytest
+ * @param pytestArgs args to give to pytest
  * @param params map containing any of the optional arguments:
  *               serverUri: URI of the server to publish with
  *               pythonVersion: Version of python being used in the project
