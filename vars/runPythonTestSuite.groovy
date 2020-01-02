@@ -30,7 +30,8 @@ def call(String imageName, ArrayList requirementsFiles, String pytestArgs, Map p
                     gitExecInstall: false,
                     buildDocs: false,
                     containerData: 'default',
-                    pipIndexUrl:'https://pypi.pacificclimate.org/simple/']
+                    pipIndexUrl:'https://pypi.pacificclimate.org/simple/',
+                    egg: true]
     Map processed = utils.processParams(defaults, params)
 
     // set up some items used in the commands below
@@ -46,7 +47,7 @@ def call(String imageName, ArrayList requirementsFiles, String pytestArgs, Map p
             }
 
             withEnv(["PIP_INDEX_URL=${processed.pipIndexUrl}"]) {
-                pytils.installRequirements(pip, requirementsFiles)
+                pytils.installRequirements(pip, requirementsFiles, processed.egg)
             }
 
             if (processed.buildDocs) {
