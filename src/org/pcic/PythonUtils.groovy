@@ -33,14 +33,10 @@ class PythonUtils implements Serializable {
         steps.sh(script: 'apt-get install -y git')
     }
 
-    void installRequirements(String pip, ArrayList requirementsFiles, boolean egg) {
+    void installRequirements(String pip, ArrayList requirementsFiles) {
         String required = '-r ' + requirementsFiles.join(' -r ')
         steps.sh(script: "${pip} install ${required}")
-        if (egg) {
-            steps.sh(script: "${pip} install -e .")
-        } else {
-            steps.sh(script: "${pip} install .")
-        }
+        steps.sh(script: "${pip} install -e .")
     }
 
     void buildDocs() {
