@@ -15,12 +15,12 @@ import org.pcic.util.Utils
  *              registryUrl: URL of the registry
  */
 def call(image, credentialsId, Map params=[:]) {
-    Map defaults = [serverUri: PCIC_DOCKER_DEV01, registryUrl: '']
-    Map processed = utils.processParams(defaults, params)
-
     GitUtils gitUtils = new GitUtils(this)
     DockerUtils dockerUtils = new DockerUtils(this)
     Utils utils = new Utils()
+    
+    Map defaults = [serverUri: PCIC_DOCKER_DEV01, registryUrl: '']
+    Map processed = utils.processParams(defaults, params)
 
     String branch = utils.getBranchName()
     ArrayList gitTags = gitUtils.isCommitTagged()
