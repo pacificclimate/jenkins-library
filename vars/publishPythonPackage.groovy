@@ -13,7 +13,7 @@ import org.pcic.util.Utils
  *              pypiUrl: URL of the pypi server to push to
  */
 def call(String imageName, String credentialsId, Map params=[:]) {
-    Utils utils = new Utils()
+    Utils utils = new Utils(this)
     PythonUtils pytils = new PythonUtils(this)
     // collect any optional variables
     Map defaults = [pythonVersion: 3,

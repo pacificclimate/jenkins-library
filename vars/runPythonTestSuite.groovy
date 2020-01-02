@@ -20,7 +20,7 @@ import org.pcic.util.Utils
  *               pipIndexUrl: URL of pip index to use during installation
  */
 def call(String imageName, ArrayList requirementsFiles, String pytestArgs, Map params=[:]) {
-    Utils utils = new Utils()
+    Utils utils = new Utils(this)
     PythonUtils pytils = new PythonUtils(this)
     DockerUtils dockerUtils = new DockerUtils(this)
 

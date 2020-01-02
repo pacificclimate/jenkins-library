@@ -17,8 +17,8 @@ import org.pcic.util.Utils
 def call(image, credentialsId, Map params=[:]) {
     GitUtils gitUtils = new GitUtils(this)
     DockerUtils dockerUtils = new DockerUtils(this)
-    Utils utils = new Utils()
-    
+    Utils utils = new Utils(this)
+
     Map defaults = [serverUri: PCIC_DOCKER_DEV01, registryUrl: '']
     Map processed = utils.processParams(defaults, params)
 
