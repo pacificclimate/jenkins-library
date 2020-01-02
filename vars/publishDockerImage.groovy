@@ -24,7 +24,7 @@ def call(image, credentialsId, Map params=[:]) {
 
     String branch = utils.getBranchName()
     ArrayList gitTags = gitUtils.isCommitTagged()
-    ArrayList dockerTags = dockerUtils.getPublishingTags(branch, gitTags)
+    ArrayList dockerTags = dockerUtils.determineTags(branch, gitTags)
 
     withDockerServer([uri: processed.serverUri]){
         docker.withRegistry(processed.registryUrl, credentialsId) {
