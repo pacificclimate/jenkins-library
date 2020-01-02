@@ -37,19 +37,19 @@ def call(String imageName, ArrayList requirementsFiles, String pytestArgs, Map p
     String pip = pytils.getPipString(processed.pythonVersion)
     String containerDataArgs = dockerUtils.getContainerArgs(processed.containerData)
 
-    withDockerServer([uri: proccessed.serverUri]) {
+    withDockerServer([uri: processed.serverUri]) {
         def pytainer = docker.image(imageName)
 
         pytainer.inside(containerDataArgs) {
-            if (proccessed.gitExecInstall) {
+            if (processed.gitExecInstall) {
                 pytils.installGitExecutable()
             }
 
-            withEnv(["PIP_INDEX_URL=${proccessed.pipIndexUrl}"]) {
+            withEnv(["PIP_INDEX_URL=${processed.pipIndexUrl}"]) {
                 pytils.installRequirements(pip, requirementsFiles)
             }
 
-            if (proccessed.buildDocs) {
+            if (processed.buildDocs) {
                 pytils.buildDocs()
             }
 
