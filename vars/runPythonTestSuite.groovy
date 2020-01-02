@@ -35,7 +35,7 @@ def call(String imageName, ArrayList requirementsFiles, String pytestArgs, Map p
 
     // set up some items used in the commands below
     String pip = pytils.getPipString(processed.pythonVersion)
-    Map containerDataArgs = dockerUtils.getContainerArgs(processed.containerData)
+    String containerDataArgs = dockerUtils.getContainerArgs(processed.containerData)
 
     withDockerServer([uri: proccessed.serverUri]) {
         def pytainer = docker.image(imageName)
