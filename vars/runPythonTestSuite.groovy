@@ -47,7 +47,8 @@ def call(String imageName, ArrayList requirementsFiles, String pytestArgs, Map p
             }
 
             withEnv(["PIP_INDEX_URL=${processed.pipIndexUrl}"]) {
-                pytils.installRequirements(pip, requirementsFiles, processed.egg)
+                // pytils.installRequirements(pip, requirementsFiles, processed.egg)
+                sh 'pip install .'
             }
 
             if (processed.buildDocs) {
