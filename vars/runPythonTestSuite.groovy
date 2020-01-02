@@ -46,9 +46,9 @@ def call(String imageName, ArrayList requirementsFiles, String pytestArgs, Map p
                 pytils.installGitExecutable()
             }
 
-            withEnv(["PIP_INDEX_URL=${processed.pipIndexUrl}"]) {
-                // pytils.installRequirements(pip, requirementsFiles, processed.egg)
-                sh 'pip install .'
+            withEnv(["PIP_INDEX_URL=${processed.pipIndexUrl}",
+                     "HOME=${WORKSPACE}"]) {
+                pytils.installRequirements(pip, requirementsFiles, processed.egg)
             }
 
             if (processed.buildDocs) {
