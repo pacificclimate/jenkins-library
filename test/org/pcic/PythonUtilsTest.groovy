@@ -40,9 +40,4 @@ public class PythonUtilsTest {
         // assert
         assert result == expected
     }
-
-    @Test
-    public void test_test() {
-        assert 1 == 2
-    }
 }

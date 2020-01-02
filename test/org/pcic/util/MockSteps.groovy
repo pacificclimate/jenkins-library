@@ -6,7 +6,7 @@ class MockSteps implements Serializable {
     def sh(Map args) {
         def retVal
 
-        if(args.script == 'git contains --tags' && args.containsKey('returnStdOut')) {
+        if(args.script == 'git tag --contains' && args.containsKey('returnStdout')) {
             retVal = "1.0.0\nsome-tag"
         }
 
