@@ -35,7 +35,7 @@ def call(String imageName, ArrayList requirementsFiles, String pytestArgs, Map p
 
     // set up some items used in the commands below
     String pip = pytils.getPipString(processed.pythonVersion)
-    Map containerDataArgs = dockerUtils.getContainerArgs(containerData)
+    Map containerDataArgs = dockerUtils.getContainerArgs(processed.containerData)
 
     withDockerServer([uri: proccessed.serverUri]) {
         def pytainer = docker.image(imageName)
@@ -43,25 +43,17 @@ def call(String imageName, ArrayList requirementsFiles, String pytestArgs, Map p
         pytainer.inside(containerDataArgs) {
             if (proccessed.gitExecInstall) {
                 pytils.installGitExecutable()
-                // sh 'apt-get update'
-                // sh 'apt-get install -y git'
             }
 
             withEnv(["PIP_INDEX_URL=${proccessed.pipIndexUrl}"]) {
                 pytils.installRequirements(pip, requirementsFiles)
-                // sh "${pip} install ${required}"
-                // sh "${pip} install -e ."
             }
 
             if (proccessed.buildDocs) {
                 pytils.buildDocs()
-                // sh 'python setup.py install'
-                // sh 'python setup.py build_sphinx'
-                // sh 'python setup.py install'
             }
 
             pytils.runPytest(pytestArgs)
-            // sh "py.test ${pytestArgs}"
         }
     }
 }
