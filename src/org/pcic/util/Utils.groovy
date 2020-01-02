@@ -5,6 +5,11 @@ import org.pcic.DockerUtils
 
 
 class Utils implements Serializable {
+    def steps
+
+    Utils(steps) {
+        this.steps = steps
+    }
 
     Map processParams(Map expected, Map args) {
         def unknownKeys = (expected.keySet() + args.keySet()) - expected.keySet()
@@ -19,10 +24,10 @@ class Utils implements Serializable {
     String getBranchName() {
         String name
 
-        if (BRANCH_NAME.contains('PR')) {
-            name = CHANGE_BRANCH
+        if (steps.env.BRANCH_NAME.contains('PR')) {
+            name = steps.env.CHANGE_BRANCH
         } else {
-            name = BRANCH_NAME
+            name = steps.env.BRANCH_NAME
         }
 
         return name
