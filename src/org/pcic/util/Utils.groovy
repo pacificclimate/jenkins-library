@@ -1,5 +1,8 @@
 package org.pcic.util
 
+import org.pcic.GitUtils
+import org.pcic.DockerUtils
+
 
 class Utils implements Serializable {
 
@@ -11,5 +14,17 @@ class Utils implements Serializable {
         }
 
         return expected + args
+    }
+
+    String getBranchName() {
+        String name
+
+        if (BRANCH_NAME.contains('PR')) {
+            name = CHANGE_BRANCH
+        } else {
+            name = BRANCH_NAME
+        }
+
+        return name
     }
 }
