@@ -27,6 +27,7 @@ class DockerUtils implements Serializable {
 
     String getContainerArgs(String project) {
         Map available = ['default': '-u root',
+                         'crmprtd': '',
                          'pdp': '-u root --volumes-from pdp_data --env-file /storage/data/projects/comp_support/jenkins/pdp_envs/pdp_deployment.env']
         String args
         if(available.containsKey(project)) {
