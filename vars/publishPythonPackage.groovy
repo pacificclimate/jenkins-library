@@ -31,7 +31,9 @@ def call(String imageName, String credentialsId, Map params=[:]) {
         pytainer.inside {
             pytils.preparePackage(pip)
 
-            withCredentials([usernamePassword(credentialsId: credentialsId, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+            withCredentials([usernamePassword(credentialsId: credentialsId,
+                                              usernameVariable: 'USERNAME',
+                                              passwordVariable: 'PASSWORD')]) {
                 pytils.releasePackage(processed.pypiUrl, USERNAME, PASSWORD)
             }
         }
