@@ -15,11 +15,8 @@ import org.pcic.util.Utils
      Utils utils = new Utils(this)
      Map defaults = [serverUri: PCIC_DOCKER_DEV01, buildArgs: '--pull .']
      Map processed = utils.processParams(defaults, params)
-     def image
-
+     
      withDockerServer([uri: processed.serverUri]) {
-         image = docker.build(imageName, processed.buildArgs)
+         return docker.build(imageName, processed.buildArgs)
      }
-
-     return image
  }
