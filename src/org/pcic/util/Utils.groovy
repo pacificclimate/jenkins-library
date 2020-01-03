@@ -32,4 +32,8 @@ class Utils implements Serializable {
 
         return name
     }
+
+    boolean isPublishable(ArrayList tags) {
+        return (steps.env.BRANCH_NAME == 'master' && !tags.isEmpty())
+    }
 }

@@ -1,5 +1,5 @@
 import org.pcic.GitUtils
-
+import org.pcic.util.Utils
 
 /**
  * Check if the branch is master and tags are present
@@ -8,11 +8,8 @@ import org.pcic.GitUtils
  */
 def call() {
     GitUtils gitUtils = new GitUtils(this)
-    def tags = gitUtils.isCommitTagged()
+    Utils utils = new Utils(this)
 
-    if (BRANCH_NAME == 'master' && !tags.isEmpty()) {
-        return true
-    } else {
-        return false
-    }
+    def tags = gitUtils.isCommitTagged()
+    return utils.isPublishable(tags)
 }

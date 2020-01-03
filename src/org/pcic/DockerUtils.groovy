@@ -1,5 +1,6 @@
 package org.pcic
 
+import org.pcic.util.Utils
 
 class DockerUtils implements Serializable {
     def steps
@@ -13,9 +14,10 @@ class DockerUtils implements Serializable {
     }
 
     ArrayList determineTags(String branchName, ArrayList gitTags) {
+        Utils utils = new Utils(steps)
         ArrayList publishTags = []
 
-        if(!gitTags.isEmpty() && branchName == 'master') {
+        if(utils.isPublishable(gitTags)) {
             publishTags.addAll(gitTags)
             publishTags.add('latest')
         } else {
