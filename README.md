@@ -25,10 +25,10 @@ The following table shows all of the currently supported steps.
 | Step | Description |
 |------|-------------|
 | [`buildDockerImage`](https://github.com/pacificclimate/jenkins-library/blob/dev/vars/buildDockerImage.groovy) | Build a Docker image onto a Docker server. |
-| [`codeCollection`](https://github.com/pacificclimate/jenkins-library/blob/dev/vars/codeCollection.groovy) | Uses the standard `checkout scm` command (only available for multi-branch pipelines) along with a git fetch. |
+| [`collectCode`](https://github.com/pacificclimate/jenkins-library/blob/dev/vars/collectCode.groovy) | Uses the standard `checkout scm` command (only available for multi-branch pipelines) along with a git fetch. |
 | [`publishDockerImage`](https://github.com/pacificclimate/jenkins-library/blob/dev/vars/publishDockerImage.groovy) | Publishes a docker image to a registry.  By default the name of the image should contain the registry to publish to in the form `your-registry/image-name:tag`.  There is an option to specify a registry with a URL. |
 | [`publishPythonPackage`](https://github.com/pacificclimate/jenkins-library/blob/dev/vars/publishPythonPackage.groovy) | Creates a python package out of the project and publishes it to pypi. |
-| [`pypiPublishable`](https://github.com/pacificclimate/jenkins-library/blob/dev/vars/pypiPublishable.groovy) | Checks branch conditions to see if the python package should be published. |  
+| [`isPypiPublishable`](https://github.com/pacificclimate/jenkins-library/blob/dev/vars/isPypiPublishable.groovy) | Checks branch conditions to see if the python package should be published. |  
 | [`removeDockerImage`](https://github.com/pacificclimate/jenkins-library/blob/dev/vars/removeDockerImage.groovy) | Removes the built Docker image from the server. |
 | [`runNodeTestSuite`](https://github.com/pacificclimate/jenkins-library/blob/dev/vars/runNodeTestSuite.groovy) | Runs a node test suite. |
 | [`runPythonTestSuite`](https://github.com/pacificclimate/jenkins-library/blob/dev/vars/runPythonTestSuite.groovy) | Runs a python test suite. |
