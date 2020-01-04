@@ -2,6 +2,11 @@ package util
 
 
 class MockSteps implements Serializable {
+    Map env
+
+    MockSteps(steps) {
+        this.env = [PCIC_DOCKER_DEV01: 'used-for-testing']
+    }
 
     def sh(Map args) {
         def retVal
