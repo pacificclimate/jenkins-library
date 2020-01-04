@@ -11,29 +11,45 @@ class Utils implements Serializable {
         this.steps = steps
     }
 
-    Map processParams(Map expected, Map args) {
-        def unknownKeys = (expected.keySet() + args.keySet()) - expected.keySet()
+    Map getUpdatedDefaultParams(ArrayList defaultKeys, Map optionalParams) {
+        return updateDefaultArgs(getApplicableParams(defaultKeys), optionalParams)
+    }
 
+    Map getApplicableParams(ArrayList keys) {
+        Map defaults = [buildArgs: '--pull .',
+                        buildDocs: false,
+                        containerData: 'default',
+                        gitExecInstall: false,
+                        registryUrl: '',
+                        serverUri: steps.env.PCIC_DOCKER_DEV01,
+                        pipIndexUrl:'https://pypi.pacificclimate.org/simple',
+                        pypiUrl: 'https://pypi.pacificclimate.org/',
+                        pythonVersion: 3]
+        return defaults.subMap(keys)
+    }
+
+    Map updateDefaultArgs(Map defaults, Map updates) {
+        if (updates.size() == 0) {
+            return defaults
+        }
+
+        def unknownKeys = updates.keySet() - defaults.keySet()
         if (unknownKeys.size() > 0) {
             throw new Exception("Key(s) ${unknownKeys} not available in ${expected.keySet()}")
         }
 
-        return expected + args
+        return defaults + updates
     }
 
     String getBranchName() {
-        String name
-
         if (steps.env.BRANCH_NAME.contains('PR')) {
-            name = steps.env.CHANGE_BRANCH
-        } else {
-            name = steps.env.BRANCH_NAME
+            return steps.env.CHANGE_BRANCH
         }
 
-        return name
+        return steps.env.BRANCH_NAME
     }
 
-    boolean isPublishable(ArrayList tags) {
-        return (steps.env.BRANCH_NAME == 'master' && !tags.isEmpty())
+    boolean isPublishable(String branchName, ArrayList tags) {
+        return (branchName == 'master' && !tags.isEmpty())
     }
 }
