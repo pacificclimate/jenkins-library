@@ -9,14 +9,11 @@ class PythonUtils implements Serializable {
     }
 
     String getPipString(int pythonVersion) {
-        String pip
         if (pythonVersion == 3) {
-            pip = 'pip3'
-        } else {
-            pip = 'pip'
+            return 'pip3'
         }
 
-        return pip
+        return 'pip'
     }
 
     void preparePackage(String pip) {

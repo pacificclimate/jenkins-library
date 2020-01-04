@@ -17,7 +17,7 @@ class DockerUtils implements Serializable {
         Utils utils = new Utils(steps)
         ArrayList publishTags = []
 
-        if(utils.isPublishable(gitTags)) {
+        if(utils.isPublishable(branchName, gitTags)) {
             publishTags.addAll(gitTags)
             publishTags.add('latest')
         } else {
@@ -31,13 +31,12 @@ class DockerUtils implements Serializable {
         Map available = ['default': '-u root',
                          'crmprtd': '',
                          'pdp': '-u root --volumes-from pdp_data --env-file /storage/data/projects/comp_support/jenkins/pdp_envs/pdp_deployment.env']
-        String args
+
         if(available.containsKey(project)) {
-            args = available[project]
+            return available[project]
         } else {
             throw new Exception("Key ${project} not available in ${available.keySet()}")
         }
 
-        return args
     }
 }
