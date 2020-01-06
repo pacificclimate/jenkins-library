@@ -14,7 +14,7 @@ class DockerUtils implements Serializable {
     }
 
     String buildImageName(String suffix) {
-        return steps.env.BASE_REGISTRY + ':' + suffix
+        return steps.env.BASE_REGISTRY + suffix
     }
 
     ArrayList determineTags(String branchName, ArrayList gitTags) {
