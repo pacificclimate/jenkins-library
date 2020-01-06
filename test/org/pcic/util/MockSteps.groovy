@@ -8,13 +8,13 @@ class MockSteps implements Serializable {
         this.env = [PCIC_DOCKER_DEV01: 'used-for-testing']
     }
 
+    /**
+     * Mocks the behaviour of `sh`
+     */
     def sh(Map args) {
-        def retVal
-
+        // Return some tags
         if(args.script == 'git tag --contains' && args.containsKey('returnStdout')) {
-            retVal = "1.0.0\nsome-tag"
+            return "1.0.0\nsome-tag"
         }
-
-        return retVal
     }
 }
