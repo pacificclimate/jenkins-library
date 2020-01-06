@@ -24,32 +24,27 @@ def call(String imageName, ArrayList requirementsFiles, String pytestArgs, Map p
     PythonUtils pytils = new PythonUtils(this)
     DockerUtils dockerUtils = new DockerUtils(this)
 
-    // collect any optional variables
-    Map defaults = [serverUri: PCIC_DOCKER_DEV01,
-                    pythonVersion: 3,
-                    gitExecInstall: false,
-                    buildDocs: false,
-                    containerData: 'default',
-                    pipIndexUrl:'https://pypi.pacificclimate.org/simple']
-    Map processed = utils.processParams(defaults, params)
+    ArrayList defaults = [serverUri, pythonVersion, gitExecInstall, buildDocs,
+                          containerData, pipIndexUrl]
+    Map args = utils.getUpdatedArgs(defaults, options)
 
     // set up some items used in the commands below
-    String pip = pytils.getPipString(processed.pythonVersion)
-    String containerDataArgs = dockerUtils.getContainerArgs(processed.containerData)
+    String pip = pytils.getPipString(args.pythonVersion)
+    String containerDataArgs = dockerUtils.getContainerArgs(args.containerData)
 
-    withDockerServer([uri: processed.serverUri]) {
+    withDockerServer([uri: args.serverUri]) {
         def pytainer = docker.image(imageName)
 
         pytainer.inside(containerDataArgs) {
-            if (processed.gitExecInstall) {
+            if (args.gitExecInstall) {
                 pytils.installGitExecutable()
             }
 
-            withEnv(["PIP_INDEX_URL=${processed.pipIndexUrl}"]) {
+            withEnv(["PIP_INDEX_URL=${args.pipIndexUrl}"]) {
                 pytils.installRequirements(pip, requirementsFiles)
             }
 
-            if (processed.buildDocs) {
+            if (args.buildDocs) {
                 pytils.buildDocs()
             }
 

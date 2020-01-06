@@ -16,16 +16,13 @@ def call(String imageName, String credentialsId, Map params=[:]) {
     Utils utils = new Utils(this)
     PythonUtils pytils = new PythonUtils(this)
 
-    // collect any optional variables
-    Map defaults = [pythonVersion: 3,
-                    serverUri: PCIC_DOCKER_DEV01,
-                    pypiUrl: 'https://pypi.pacificclimate.org/']
-    Map processed = utils.processParams(defaults, params)
+    Map args = utils.getUpdatedArgs([pythonVersion, serverUri, pypiUrl],
+                                    options)
 
     // set up some items used in the commands below
-    String pip = pytils.getPipString(processed.pythonVersion)
+    String pip = pytils.getPipString(args.pythonVersion)
 
-    withDockerServer([uri: processed.serverUri]) {
+    withDockerServer([uri: args.serverUri]) {
         def pytainer = docker.image(imageName)
 
         pytainer.inside {
@@ -34,7 +31,7 @@ def call(String imageName, String credentialsId, Map params=[:]) {
             withCredentials([usernamePassword(credentialsId: credentialsId,
                                               usernameVariable: 'USERNAME',
                                               passwordVariable: 'PASSWORD')]) {
-                pytils.releasePackage(processed.pypiUrl, USERNAME, PASSWORD)
+                pytils.releasePackage(args.pypiUrl, USERNAME, PASSWORD)
             }
         }
     }

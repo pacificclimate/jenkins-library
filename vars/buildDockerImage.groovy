@@ -6,17 +6,16 @@ import org.pcic.util.Utils
  * will build this image on docker-dev01.
  *
  * @param imageName the name of the image
- * @param params map containing optional arguments:
-                 serverUri: URI of the docker server to build on
-                 buildArgs: docker build arguments
+ * @param options map containing optional arguments:
+                  serverUri: URI of the docker server to build on
+                  buildArgs: docker build arguments
  * @return image the built docker image object
  */
- def call(String imageName, Map params = [:]) {
+ def call(String imageName, Map options = [:]) {
      Utils utils = new Utils(this)
-     Map defaults = [serverUri: PCIC_DOCKER_DEV01, buildArgs: '--pull .']
-     Map processed = utils.processParams(defaults, params)
-     
-     withDockerServer([uri: processed.serverUri]) {
-         return docker.build(imageName, processed.buildArgs)
+     Map args = utils.getUpdatedArgs([serverUri, buildArgs], options)
+
+     withDockerServer([uri: args.serverUri]) {
+         return docker.build(imageName, args.buildArgs)
      }
  }

@@ -12,20 +12,19 @@ import org.pcic.util.Utils
  *               serverUri: URI of the server to publish with
  *               registryUrl: URL of the registry
  */
-def call(image, credentialsId, Map params=[:]) {
+def call(image, credentialsId, Map options = [:]) {
     GitUtils gitUtils = new GitUtils(this)
     DockerUtils dockerUtils = new DockerUtils(this)
     Utils utils = new Utils(this)
 
-    Map defaults = [serverUri: PCIC_DOCKER_DEV01, registryUrl: '']
-    Map processed = utils.processParams(defaults, params)
+    Map args = utils.getUpdatedArgs([serverUri, registryUrl], options)
 
     String branch = utils.getBranchName()
     ArrayList gitTags = gitUtils.isCommitTagged()
     ArrayList dockerTags = dockerUtils.determineTags(branch, gitTags)
 
-    withDockerServer([uri: processed.serverUri]){
-        docker.withRegistry(processed.registryUrl, credentialsId) {
+    withDockerServer([uri: args.serverUri]){
+        docker.withRegistry(args.registryUrl, credentialsId) {
             dockerTags.each { tag ->
                 image.push(tag)
             }
