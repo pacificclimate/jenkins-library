@@ -13,6 +13,10 @@ class DockerUtils implements Serializable {
         steps.sh(script: "docker rmi ${imageName}")
     }
 
+    String buildImageName(String suffix) {
+        return steps.env.BASE_REGISTRY + ':' + suffix
+    }
+
     ArrayList determineTags(String branchName, ArrayList gitTags) {
         Utils utils = new Utils(steps)
         ArrayList publishTags = []
