@@ -14,7 +14,7 @@ To get access to this library you have to let Jenkins know about it.
 3. **Save**
 
 To use the library steps in a Jenkinsfile add the following line to the top of your file:
-```
+```groovy
 @Library('pcic-pipeline-library')_
 ```
 **NOTE:** The `_` is not a typo and must be included.
