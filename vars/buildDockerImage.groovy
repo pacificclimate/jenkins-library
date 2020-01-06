@@ -10,10 +10,9 @@ import org.pcic.DockerUtils
  * @param options map containing optional arguments:
  *                serverUri: URI of the docker server to build on
  *                buildArgs: docker build arguments
- * @return [image, imageName] the built docker image object and the name of the
- *                            image
+ * @return ArrayList the built docker image object and the name of the image
  */
- def call(String imageSuffix, Map options = [:]) {
+ ArrayList call(String imageSuffix, Map options = [:]) {
      DockerUtils dockerUtils = new DockerUtils(this)
      Utils utils = new Utils(this)
 
