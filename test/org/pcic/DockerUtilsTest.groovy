@@ -71,8 +71,6 @@ public class DockerUtilsTest {
 
     @Test(expected = Exception.class)
     public void getContainerArgs_exception() {
-        String project = 'badKey'
-
-        String result = dockerUtils.getContainerArgs(project)
+        dockerUtils.getContainerArgs('badKey')
     }
 }
