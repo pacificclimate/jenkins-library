@@ -40,7 +40,7 @@ class Utils implements Serializable {
     }
 
     /**
-     * Takes two maps and returns the combination of those maps
+     * Update default map given update map
      */
     Map updateArgs(Map defaults, Map updates) {
         // Check if there is anything to update
