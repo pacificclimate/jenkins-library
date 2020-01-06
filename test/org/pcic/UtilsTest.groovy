@@ -16,12 +16,12 @@ public class UtilsTest {
     }
 
     @Test
-    public void getUpdatedDefaultParams_correctList() {
+    public void getUpdatedArgs_correctList() {
         ArrayList keys = ['buildArgs', 'buildDocs', 'pipIndexUrl']
         Map params = [buildArgs: '.', pipIndexUrl: 'https://test.url.com']
         Map expected = [buildArgs: '.', buildDocs: false, pipIndexUrl: 'https://test.url.com']
 
-        Map result = utils.getUpdatedDefaultParams(keys, params)
+        Map result = utils.getUpdatedArgs(keys, params)
 
         assert result == expected
     }

@@ -11,11 +11,18 @@ class Utils implements Serializable {
         this.steps = steps
     }
 
-    Map getUpdatedDefaultParams(ArrayList defaultKeys, Map optionalParams) {
-        return updateDefaultArgs(getApplicableParams(defaultKeys), optionalParams)
+    /**
+     * This method takes in a list of keys and a map, and returns a map with
+     * updates values.
+     */
+    Map getUpdatedArgs(ArrayList keys, Map argsToUpdate) {
+        return updateArgs(getDefaultArgs(keys), argsToUpdate)
     }
 
-    Map getApplicableParams(ArrayList keys) {
+    /**
+     * Returns a submap given a list of keys
+     */
+    Map getDefaultArgs(ArrayList keys) {
         Map defaults = [buildArgs: '--pull .',
                         buildDocs: false,
                         containerData: 'default',
@@ -28,16 +35,24 @@ class Utils implements Serializable {
         return defaults.subMap(keys)
     }
 
-    Map updateDefaultArgs(Map defaults, Map updates) {
+    /**
+     * Takes two maps and returns the combination of those maps
+     */
+    Map updateArgs(Map defaults, Map updates) {
+        // Check if there is anything to update
         if (updates.size() == 0) {
             return defaults
         }
 
+        // Check that all keys in update map exist in default args
         def unknownKeys = updates.keySet() - defaults.keySet()
         if (unknownKeys.size() > 0) {
             throw new Exception("Key(s) ${unknownKeys} not available in ${expected.keySet()}")
         }
 
+        // The way groovy handles this expression is that keys in both
+        // `defaults` and `updates` will be updated to have the value from
+        // `updates`.  Other key, value pairs are left as is.
         return defaults + updates
     }
 
