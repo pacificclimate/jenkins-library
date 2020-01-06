@@ -24,8 +24,8 @@ def call(String imageName, ArrayList requirementsFiles, String pytestArgs, Map p
     PythonUtils pytils = new PythonUtils(this)
     DockerUtils dockerUtils = new DockerUtils(this)
 
-    ArrayList defaults = [serverUri, pythonVersion, gitExecInstall, buildDocs,
-                          containerData, pipIndexUrl]
+    ArrayList defaults = ['serverUri', 'pythonVersion', 'gitExecInstall',
+                          'buildDocs', 'containerData', 'pipIndexUrl']
     Map args = utils.getUpdatedArgs(defaults, options)
 
     // set up some items used in the commands below

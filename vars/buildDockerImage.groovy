@@ -13,7 +13,7 @@ import org.pcic.util.Utils
  */
  def call(String imageName, Map options = [:]) {
      Utils utils = new Utils(this)
-     Map args = utils.getUpdatedArgs([serverUri, buildArgs], options)
+     Map args = utils.getUpdatedArgs(['serverUri', 'buildArgs'], options)
 
      withDockerServer([uri: args.serverUri]) {
          return docker.build(imageName, args.buildArgs)

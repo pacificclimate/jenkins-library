@@ -17,7 +17,7 @@ def call(image, credentialsId, Map options = [:]) {
     DockerUtils dockerUtils = new DockerUtils(this)
     Utils utils = new Utils(this)
 
-    Map args = utils.getUpdatedArgs([serverUri, registryUrl], options)
+    Map args = utils.getUpdatedArgs(['serverUri', 'registryUrl'], options)
 
     String branch = utils.getBranchName()
     ArrayList gitTags = gitUtils.isCommitTagged()

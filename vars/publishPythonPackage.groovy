@@ -16,7 +16,7 @@ def call(String imageName, String credentialsId, Map params=[:]) {
     Utils utils = new Utils(this)
     PythonUtils pytils = new PythonUtils(this)
 
-    Map args = utils.getUpdatedArgs([pythonVersion, serverUri, pypiUrl],
+    Map args = utils.getUpdatedArgs(['pythonVersion', 'serverUri', 'pypiUrl'],
                                     options)
 
     // set up some items used in the commands below
