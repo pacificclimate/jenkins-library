@@ -6,6 +6,7 @@ node {
     }
 
     stage('Run Tests') {
-        sh 'gradle test'
+        def gradleHome = tool 'gradle'
+        sh "'${gradleHome}/bin/gradle' test"
     }
 }
