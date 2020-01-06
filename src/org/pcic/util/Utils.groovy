@@ -12,15 +12,19 @@ class Utils implements Serializable {
     }
 
     /**
-     * This method takes in a list of keys and a map, and returns a map with
-     * updates values.
+     * Returns map of updated default arguments
      */
     Map getUpdatedArgs(ArrayList keys, Map argsToUpdate) {
         return updateArgs(getDefaultArgs(keys), argsToUpdate)
     }
 
     /**
-     * Returns a submap given a list of keys
+     * Returns a map of default arguments, given a list of keys.
+     *
+     * Default arguments are common to many steps and classes, so are defined
+     * once here. Because only a subset of the arguments is required or valid
+     * for any given step, the keys of those arguments are passed in and only
+     * those defaults are returned.
      */
     Map getDefaultArgs(ArrayList keys) {
         Map defaults = [buildArgs: '--pull .',
