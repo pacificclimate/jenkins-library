@@ -17,27 +17,21 @@ public class PythonUtilsTest {
 
     @Test
     public void getPipString_python2() {
-        // prepare
         int version = 2
         String expected = 'pip'
 
-        // execute
         String result = pythonUtils.getPipString(version)
 
-        // assert
         assert result == expected
     }
 
     @Test
     public void getPipString_python3() {
-        // prepare
         int version = 3
         String expected = 'pip3'
 
-        // execute
         String result = pythonUtils.getPipString(version)
 
-        // assert
         assert result == expected
     }
 }

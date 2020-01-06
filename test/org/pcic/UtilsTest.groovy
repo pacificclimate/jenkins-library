@@ -28,9 +28,6 @@ public class UtilsTest {
 
     @Test(expected = Exception.class)
     public void getUpdatedArgs_badList() {
-        ArrayList keys = ['badKey']
-        Map args = []
-
-        Map result = utils.getUpdatedArgs(keys, args)
+        Map result = utils.getUpdatedArgs('badKey', [])
     }
 }

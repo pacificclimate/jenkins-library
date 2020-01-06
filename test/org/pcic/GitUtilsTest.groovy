@@ -17,15 +17,10 @@ public class GitUtilsTest {
 
     @Test
     public void isCommitTagged_returnsList() {
-        // prepare
         ArrayList expected_tags = ['1.0.0', 'some-tag']
-        int expected_size = 2
 
-        // execute
         ArrayList result = gitUtils.isCommitTagged()
 
-        // assert
         assert result == expected_tags
-        assert result.size() == expected_size
     }
 }
