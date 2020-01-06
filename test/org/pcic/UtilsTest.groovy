@@ -18,11 +18,19 @@ public class UtilsTest {
     @Test
     public void getUpdatedArgs_correctList() {
         ArrayList keys = ['buildArgs', 'buildDocs', 'pipIndexUrl']
-        Map params = [buildArgs: '.', pipIndexUrl: 'https://test.url.com']
+        Map args = [buildArgs: '.', pipIndexUrl: 'https://test.url.com']
         Map expected = [buildArgs: '.', buildDocs: false, pipIndexUrl: 'https://test.url.com']
 
-        Map result = utils.getUpdatedArgs(keys, params)
+        Map result = utils.getUpdatedArgs(keys, args)
 
         assert result == expected
+    }
+
+    @Test(expected = Exception.class)
+    public void getUpdatedArgs_badList() {
+        ArrayList keys = ['badKey']
+        Map args = []
+
+        Map result = utils.getUpdatedArgs(keys, args)
     }
 }
