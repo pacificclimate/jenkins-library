@@ -8,9 +8,9 @@ import org.pcic.util.Utils
  *
  * @param image image obeject to publish
  * @param credentialsId identification string of credentials in jenkins
- * @param params map containing any of the optional arguments:
- *               serverUri: URI of the server to publish with
- *               registryUrl: URL of the registry
+ * @param options map containing any of the optional arguments:
+ *                serverUri: URI of the server to publish with
+ *                registryUrl: URL of the registry
  */
 def call(image, credentialsId, Map options = [:]) {
     GitUtils gitUtils = new GitUtils(this)

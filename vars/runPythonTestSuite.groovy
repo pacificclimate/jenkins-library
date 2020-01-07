@@ -9,17 +9,17 @@ import org.pcic.util.Utils
  * @param imageName name of python docker image
  * @param requirementsFiles list of requirements files to be installed
  * @param pytestArgs args to give to pytest
- * @param params map containing any of the optional arguments:
- *               serverUri: URI of the server to publish with
- *               pythonVersion: Version of python being used in the project
- *               gitExecInstall: Set to true if git executable needs to be
- *                               installed
- *               buildDocs: Set to true is sphinx docs need to be built
- *               containerData: Generally left as default, `pdp` for pdp data
- *                              from storage
- *               pipIndexUrl: URL of pip index to use during installation
+ * @param options map containing any of the optional arguments:
+ *                serverUri: URI of the server to publish with
+ *                pythonVersion: Version of python being used in the project
+ *                gitExecInstall: Set to true if git executable needs to be
+ *                                installed
+ *                buildDocs: Set to true is sphinx docs need to be built
+ *                containerData: Generally left as default, `pdp` for pdp data
+ *                               from storage
+ *                pipIndexUrl: URL of pip index to use during installation
  */
-def call(String imageName, ArrayList requirementsFiles, String pytestArgs, Map params=[:]) {
+def call(String imageName, ArrayList requirementsFiles, String pytestArgs, Map options = [:]) {
     Utils utils = new Utils(this)
     PythonUtils pytils = new PythonUtils(this)
     DockerUtils dockerUtils = new DockerUtils(this)
