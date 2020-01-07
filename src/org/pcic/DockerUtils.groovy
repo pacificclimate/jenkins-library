@@ -14,6 +14,9 @@ class DockerUtils implements Serializable {
     }
 
     String buildImageName(String suffix) {
+        if (suffix.contains('/')) {
+            throw new Exception("Image name suffix: ${suffix} cannot contain `/` character")
+        }
         return steps.env.BASE_REGISTRY + suffix
     }
 
@@ -36,11 +39,10 @@ class DockerUtils implements Serializable {
                          'crmprtd': '',
                          'pdp': '-u root --volumes-from pdp_data --env-file /storage/data/projects/comp_support/jenkins/pdp_envs/pdp_deployment.env']
 
-        if(available.containsKey(project)) {
-            return available[project]
-        } else {
+        if(!available.containsKey(project)) {
             throw new Exception("Key ${project} not available in ${available.keySet()}")
         }
 
+        return available[project]
     }
 }

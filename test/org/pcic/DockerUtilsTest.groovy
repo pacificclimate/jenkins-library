@@ -16,6 +16,18 @@ public class DockerUtilsTest {
     }
 
     @Test
+    public void buildImageName_goodSuffix() {
+        String result = dockerUtils.buildImageName('some-suffix')
+
+        assert result == 'registry/some-suffix'
+    }
+
+    @Test(expected = Exception.class)
+    public void buildImageName_badSuffix() {
+        dockerUtils.buildImageName('bad/suffix')
+    }
+
+    @Test
     public void determineTags_masterAndGitTags() {
         String branchName = 'master'
         def gitTags = ['1.0.0', 'some-tag']

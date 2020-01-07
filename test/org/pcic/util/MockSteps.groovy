@@ -5,9 +5,10 @@ class MockSteps implements Serializable {
     Map env
 
     MockSteps() {
-        this.env = [PCIC_DOCKER_DEV01: 'used-for-testing',
+        this.env = [BASE_REGISTRY: 'registry/',
                     BRANCH_NAME: 'PR-100',
-                    CHANGE_BRANCH: 'change-branch-name']
+                    CHANGE_BRANCH: 'change-branch-name',
+                    PCIC_DOCKER_DEV01: 'used-for-testing']
     }
 
     /**
