@@ -62,4 +62,10 @@ public class UtilsTest {
     public void isPublishable_false() {
         assert utils.isPublishable('badBranch', []) == false
     }
+
+    @Test
+    public void getExceptionType_returnString() {
+        Exception e = new Exception('java.lang.Exception: some test exception')
+        assert utils.getExceptionType(e) == 'java.lang.Exception'
+    }
 }
