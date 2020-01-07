@@ -11,5 +11,5 @@ def call() {
     Utils utils = new Utils(this)
 
     def tags = gitUtils.isCommitTagged()
-    return utils.isPublishable(tags)
+    return utils.isPublishable(BRANCH_NAME, tags)
 }
