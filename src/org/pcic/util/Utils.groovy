@@ -27,10 +27,10 @@ class Utils implements Serializable {
      * those defaults are returned.
      */
     Map getDefaultArgs(ArrayList keys) {
-        Map defaults = [buildArgs: '--pull .',
+        Map defaults = [aptPackages: [],
+                        buildArgs: '--pull .',
                         buildDocs: false,
                         containerData: 'default',
-                        gitExecInstall: false,
                         registryUrl: '',
                         serverUri: steps.env.PCIC_DOCKER_DEV01,
                         pipIndexUrl:'https://pypi.pacificclimate.org/simple',
@@ -70,5 +70,34 @@ class Utils implements Serializable {
 
     boolean isPublishable(String branchName, ArrayList tags) {
         return (branchName == 'master' && !tags.isEmpty())
+    }
+
+    /**
+     * Installs packages using apt-get
+     *
+     * In some cases before we can install a package the package list must be
+     * updated.  Updating the list is a costly operation timewise and thus we'd
+     * like to avoid running it unnecessarily.  Before running the installation
+     * we check against a list of packages known to require an update.
+     *
+     * @param packages list of packages to install
+     */
+    void installAptPackages(ArrayList packages) {
+        ArrayList requireUpdate = ['git'].intersect(packages)
+
+        if (requireUpdate.size() > 0) {
+            updatePackageList()
+        }
+
+        aptGetInstall(packages)
+    }
+
+    void updatePackageList() {
+        steps.sh(script: 'apt-get update')
+    }
+
+    void aptGetInstall(ArrayList packages) {
+        String installs = packages.join(' ')
+        steps.sh(script: "apt-get install -y ${installs}")
     }
 }
