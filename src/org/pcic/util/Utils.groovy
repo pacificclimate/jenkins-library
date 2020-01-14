@@ -2,6 +2,7 @@ package org.pcic.util
 
 import org.pcic.GitUtils
 import org.pcic.DockerUtils
+import org.pcic.util.Global
 
 
 class Utils implements Serializable {
@@ -83,7 +84,7 @@ class Utils implements Serializable {
      * @param packages list of packages to install
      */
     void installAptPackages(ArrayList packages) {
-        ArrayList requireUpdate = ['git'].intersect(packages)
+        ArrayList requireUpdate = Global.constants.requireUpdate.intersect(packages)
 
         if (requireUpdate.size() > 0) {
             updatePackageList()
