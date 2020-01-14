@@ -25,11 +25,6 @@ class PythonUtils implements Serializable {
         steps.sh(script: "twine upload --repository-url ${pypiUrl} --skip-existing -u ${username} -p ${password} dist/*")
     }
 
-    void installGitExecutable() {
-        steps.sh(script: 'apt-get update')
-        steps.sh(script: 'apt-get install -y git')
-    }
-
     void installRequirements(String pip, ArrayList requirementsFiles) {
         String required = '-r ' + requirementsFiles.join(' -r ')
         steps.sh(script: "${pip} install ${required}")

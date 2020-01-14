@@ -12,8 +12,7 @@ import org.pcic.util.Utils
  * @param options map containing any of the optional arguments:
  *                serverUri: URI of the server to publish with
  *                pythonVersion: Version of python being used in the project
- *                gitExecInstall: Set to true if git executable needs to be
- *                                installed
+ *                aptPackages: List of packages to install
  *                buildDocs: Set to true is sphinx docs need to be built
  *                containerData: Generally left as default, `pdp` for pdp data
  *                               from storage
@@ -24,7 +23,7 @@ def call(String imageName, ArrayList requirementsFiles, String pytestArgs, Map o
     PythonUtils pytils = new PythonUtils(this)
     DockerUtils dockerUtils = new DockerUtils(this)
 
-    ArrayList defaults = ['serverUri', 'pythonVersion', 'gitExecInstall',
+    ArrayList defaults = ['serverUri', 'pythonVersion', 'aptPackages',
                           'buildDocs', 'containerData', 'pipIndexUrl']
     Map args = utils.getUpdatedArgs(defaults, options)
 
@@ -36,8 +35,8 @@ def call(String imageName, ArrayList requirementsFiles, String pytestArgs, Map o
         def pytainer = docker.image(imageName)
 
         pytainer.inside(containerDataArgs) {
-            if (args.gitExecInstall) {
-                pytils.installGitExecutable()
+            if (args.aptPackages.size() > 0) {
+                utils.installAptPackages(args.aptPackages)
             }
 
             withEnv(["PIP_INDEX_URL=${args.pipIndexUrl}"]) {
