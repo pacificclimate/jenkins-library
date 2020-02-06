@@ -28,8 +28,9 @@ The following table shows all of the currently supported steps.
 | [`collectCode`](https://github.com/pacificclimate/jenkins-library/blob/master/vars/collectCode.groovy) | Uses the standard `checkout scm` command (only available for multi-branch pipelines) along with a git fetch. |
 | [`isPypiPublishable`](https://github.com/pacificclimate/jenkins-library/blob/master/vars/isPypiPublishable.groovy) | Checks branch conditions to see if the python package should be published. |  
 | [`publishDockerImage`](https://github.com/pacificclimate/jenkins-library/blob/master/vars/publishDockerImage.groovy) | Publishes a docker image to a registry.  By default the name of the image should contain the registry to publish to in the form `your-registry/image-name:tag`.  There is an option to specify a registry with a URL. |
-| [`publishPythonPackage`](https://github.com/pacificclimate/jenkins-library/blob/master/vars/publishPythonPackage.groovy | Creates a python package out of the project and publishes it to pypi. |
+| [`publishPythonPackage`](https://github.com/pacificclimate/jenkins-library/blob/master/vars/publishPythonPackage.groovy) | Creates a python package out of the project and publishes it to pypi. |
 | [`removeDockerImage`](https://github.com/pacificclimate/jenkins-library/blob/master/vars/removeDockerImage.groovy) | Removes the built Docker image from the server. |
+| [`reportableStage`](https://github.com/pacificclimate/jenkins-library/blob/master/vars/reportableStage.groovy) | Reports the status of the stage to in the commit status notification. |
 | [`runNodeTestSuite`](https://github.com/pacificclimate/jenkins-library/blob/master/vars/runNodeTestSuite.groovy) | Runs a node test suite. |
 | [`runPythonTestSuite`](https://github.com/pacificclimate/jenkins-library/blob/master/vars/runPythonTestSuite.groovy) | Runs a python test suite. |
 

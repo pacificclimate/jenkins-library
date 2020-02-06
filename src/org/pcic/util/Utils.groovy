@@ -101,4 +101,8 @@ class Utils implements Serializable {
         String installs = packages.join(' ')
         steps.sh(script: "apt-get install -y ${installs}")
     }
+
+    String getExceptionType(Exception e) {
+        return e.toString().tokenize(':')[0]
+    }
 }
