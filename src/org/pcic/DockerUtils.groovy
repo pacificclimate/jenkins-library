@@ -4,9 +4,11 @@ import org.pcic.util.Utils
 
 class DockerUtils implements Serializable {
     def steps
+    def utils
 
     DockerUtils(steps) {
         this.steps = steps
+        this.utils = new Utils(steps)
     }
 
     void removeImage(String imageName) {
@@ -17,11 +19,10 @@ class DockerUtils implements Serializable {
         if (suffix.contains('/')) {
             throw new Exception("Image name suffix: ${suffix} cannot contain `/` character")
         }
-        return steps.env.BASE_REGISTRY + suffix
+        return steps.env.BASE_REGISTRY + suffix + ":" + utils.getBranchName()
     }
 
     ArrayList determineTags(String branchName, ArrayList gitTags) {
-        Utils utils = new Utils(steps)
         ArrayList publishTags = []
 
         if(utils.isPublishable(branchName, gitTags)) {

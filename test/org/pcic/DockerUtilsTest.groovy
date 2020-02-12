@@ -19,7 +19,7 @@ public class DockerUtilsTest {
     public void buildImageName_goodSuffix() {
         String result = dockerUtils.buildImageName('some-suffix')
 
-        assert result == 'registry/some-suffix'
+        assert result == 'registry/some-suffix:change-branch-name'
     }
 
     @Test(expected = Exception.class)
