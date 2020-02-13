@@ -1,6 +1,7 @@
 package org.pcic
 
 import org.pcic.util.Utils
+import org.pcic.GitUtils
 import org.pcic.util.Global
 
 
@@ -31,17 +32,18 @@ class DockerUtils implements Serializable {
         return formatDockerString(registry) + '/' + formatDockerString(base) + ":" + formatDockerString(tag)
     }
 
-    ArrayList determineTags(String branchName, ArrayList gitTags) {
-        ArrayList publishTags = []
+    ArrayList getTags() {
+        GitUtils gitUtils = new GitUtils(steps)
+        String branchName = utils.getBranchName()
+        ArrayList gitTags = gitUtils.getCommitTags()
+        ArrayList tags = []
 
         if(utils.isPublishable(branchName, gitTags)) {
-            publishTags.addAll(gitTags)
-            publishTags.add('latest')
-        } else {
-            publishTags = [branchName]
+            tags.addAll(gitTags)
+            tags.add('latest')
         }
 
-        return publishTags
+        return tags
     }
 
     String getContainerArgs(String project) {

@@ -8,14 +8,14 @@ class GitUtils implements Serializable {
         this.steps = steps
     }
 
-    ArrayList isCommitTagged() {
-        String gitTags = steps.sh(script: 'git tag --contains', returnStdout: true)
+    ArrayList getCommitTags() {
+        String tags = steps.sh(script: 'git tag --contains', returnStdout: true)
 
-        if (gitTags.isEmpty()) {
+        if (tags.isEmpty()) {
             return []
         }
 
-        return gitTags.trim().split('\n')
+        return tags.trim().split('\n')
     }
 
     void gitFetch() {
