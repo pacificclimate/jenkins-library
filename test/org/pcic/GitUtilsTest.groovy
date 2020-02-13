@@ -16,11 +16,9 @@ public class GitUtilsTest {
     }
 
     @Test
-    public void isCommitTagged_returnsList() {
-        ArrayList expected_tags = ['1.0.0', 'some-tag']
+    public void getCommitTags_returnsList() {
+        ArrayList result = gitUtils.getCommitTags()
 
-        ArrayList result = gitUtils.isCommitTagged()
-
-        assert result == expected_tags
+        assert result == ['1.0.0', 'some/tag']
     }
 }
