@@ -16,15 +16,17 @@ public class DockerUtilsTest {
     }
 
     @Test
-    public void buildImageName_goodSuffix() {
-        String result = dockerUtils.buildImageName('some-suffix')
+    public void buildImageName_goodName() {
+        String result = dockerUtils.buildImageName('registry', 'base', 'tag')
 
-        assert result == 'registry/some-suffix:change-branch-name'
+        assert result == 'registry/base:tag'
     }
 
-    @Test(expected = Exception.class)
-    public void buildImageName_badSuffix() {
-        dockerUtils.buildImageName('bad/suffix')
+    @Test
+    public void buildImageName_formattedName() {
+        String result = dockerUtils.buildImageName('registry', 'feature/base', 'tag:2.0')
+
+        assert result == 'registry/feature-base:tag-2.0'
     }
 
     @Test
