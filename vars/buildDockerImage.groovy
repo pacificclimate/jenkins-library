@@ -1,5 +1,4 @@
 import org.pcic.util.Utils
-import org.pcic.DockerUtils
 
 
 /**
@@ -12,14 +11,11 @@ import org.pcic.DockerUtils
  *                buildArgs: docker build arguments
  * @return ArrayList the built docker image object and the name of the image
  */
- ArrayList call(String imageSuffix, Map options = [:]) {
-     DockerUtils dockerUtils = new DockerUtils(this)
+ ArrayList call(String imageName, Map options = [:]) {
      Utils utils = new Utils(this)
-
      Map args = utils.getUpdatedArgs(['serverUri', 'buildArgs'], options)
-     String imageName = dockerUtils.buildImageName(imageSuffix)
 
      withDockerServer([uri: args.serverUri]) {
-         return [docker.build(imageName, args.buildArgs), imageName]
+         return docker.build(imageName, args.buildArgs)
      }
  }

@@ -1,6 +1,8 @@
 package org.pcic
 
 import org.pcic.util.Utils
+import org.pcic.util.Global
+
 
 class DockerUtils implements Serializable {
     def steps
@@ -15,11 +17,18 @@ class DockerUtils implements Serializable {
         steps.sh(script: "docker rmi ${imageName}")
     }
 
-    String buildImageName(String suffix) {
-        if (suffix.contains('/')) {
-            throw new Exception("Image name suffix: ${suffix} cannot contain `/` character")
+    String formatDockerString(String str, String replacement = '-') {
+        for (String illegalChar : Global.constants.illegalDockerChars) {
+            if (str.contains(illegalChar)) {
+                str = str.replaceAll(illegalChar, replacement)
+            }
         }
-        return steps.env.BASE_REGISTRY + suffix + ":" + utils.getBranchName()
+
+        return str
+    }
+
+    String buildImageName(String registry, String base, String tag) {
+        return formatDockerString(registry) + '/' + formatDockerString(base) + ":" + formatDockerString(tag)
     }
 
     ArrayList determineTags(String branchName, ArrayList gitTags) {
