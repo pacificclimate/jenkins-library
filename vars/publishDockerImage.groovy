@@ -4,9 +4,9 @@ import org.pcic.util.Utils
 
 
 /**
- * Given an image publish it with the appropriate tags to the PCIC Docker hub.
+ * Publish a docker image with the appropriate tags
  *
- * @param image image obeject to publish
+ * @param image image object to publish
  * @param credentialsId identification string of credentials in jenkins
  * @param options map containing any of the optional arguments:
  *                serverUri: URI of the server to publish with
