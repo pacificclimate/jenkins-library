@@ -8,7 +8,19 @@ import org.pcic.DockerUtils
  */
 def call(String imageName, String serverUri = PCIC_DOCKER_DEV01) {
     DockerUtils dockerUtils = new DockerUtils(this)
+
     withDockerServer([uri: serverUri]){
-        dockerUtils.removeImage(imageName)
+        String id = dockerUtils.getImageId(imageName)
+        ArrayList images = dockerUtils.getDeletableImages(imageName)
+
+        for (String image : images) {
+            dockerUtils.removeImage(image)
+        }
+
+        try {
+            dockerUtils.removeImage(id)
+        } catch(Exception e) {
+            echo "${e}"
+        }
     }
 }

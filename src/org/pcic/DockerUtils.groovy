@@ -14,8 +14,8 @@ class DockerUtils implements Serializable {
         this.utils = new Utils(steps)
     }
 
-    void removeImage(String imageName) {
-        steps.sh(script: "docker rmi ${imageName}")
+    void removeImage(String image) {
+        steps.sh(script: "docker rmi ${image}")
     }
 
     String formatDockerString(String str, String replacement = '-') {
@@ -43,7 +43,12 @@ class DockerUtils implements Serializable {
             tags.add('latest')
         }
 
-        return tags
+        def formatted = []
+        for (String tag : tags) {
+            formatted.add(formatDockerString(tag))
+        }
+        
+        return formatted
     }
 
     String getContainerArgs(String project) {
@@ -56,5 +61,22 @@ class DockerUtils implements Serializable {
         }
 
         return available[project]
+    }
+
+    String getImageId(String imageName) {
+        return steps.sh(script: "docker images --filter=reference=${imageName} --format '{{.ID}}'", returnStdout: true).trim()
+    }
+
+    ArrayList getDeletableImages(imageName) {
+        ArrayList tags = getTags()
+        def matcher = imageName =~ /.*\/.*:/
+        String imageBase = matcher[0]
+        ArrayList deletable = [imageName]
+
+        for (String tag : tags) {
+            deletable.add(imageBase + tag)
+        }
+
+        return deletable
     }
 }
