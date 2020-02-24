@@ -8,17 +8,17 @@ class PythonUtils implements Serializable {
         this.steps = steps
     }
 
-    String getPipString(int pythonVersion) {
-        if (pythonVersion == 3) {
-            return 'pip3'
+    String applyPythonVersion(String base, int pythonVersion) {
+        if (pythonVersion != 2) {
+            return base + pythonVersion.toString()
         }
 
-        return 'pip'
+        return base
     }
 
-    void preparePackage(String pip) {
+    void preparePackage(String pip, String python) {
         steps.sh(script: "${pip} install twine wheel")
-        steps.sh(script: 'python setup.py sdist bdist_wheel')
+        steps.sh(script: "${python} setup.py sdist bdist_wheel")
     }
 
     void releasePackage(String pypiUrl, String username, String password) {
@@ -31,10 +31,10 @@ class PythonUtils implements Serializable {
         steps.sh(script: "${pip} install -e .")
     }
 
-    void buildDocs() {
-        steps.sh(script: 'python setup.py install')
-        steps.sh(script: 'python setup.py build_sphinx')
-        steps.sh(script: 'python setup.py install')
+    void buildDocs(String python) {
+        steps.sh(script: "${python} setup.py install")
+        steps.sh(script: "${python} setup.py build_sphinx")
+        steps.sh(script: "${python} setup.py install")
     }
 
     void runPytest(String args) {
