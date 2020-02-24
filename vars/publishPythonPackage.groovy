@@ -20,13 +20,14 @@ def call(String imageName, String credentialsId, Map options = [:]) {
                                     options)
 
     // set up some items used in the commands below
-    String pip = pytils.getPipString(args.pythonVersion)
+    String pip = pytils.applyPythonVersion('pip', args.pythonVersion)
+    String python = pytils.applyPythonVersion('python', args.pythonVersion)
 
     withDockerServer([uri: args.serverUri]) {
         def pytainer = docker.image(imageName)
 
         pytainer.inside {
-            pytils.preparePackage(pip)
+            pytils.preparePackage(pip, python)
 
             withCredentials([usernamePassword(credentialsId: credentialsId,
                                               usernameVariable: 'USERNAME',

@@ -16,21 +16,21 @@ public class PythonUtilsTest {
     }
 
     @Test
-    public void getPipString_python2() {
+    public void applyPythonVersion_python2() {
         int version = 2
         String expected = 'pip'
 
-        String result = pythonUtils.getPipString(version)
+        String result = pythonUtils.applyPythonVersion(expected, version)
 
         assert result == expected
     }
 
     @Test
-    public void getPipString_python3() {
+    public void applyPythonVersion_python3() {
         int version = 3
         String expected = 'pip3'
 
-        String result = pythonUtils.getPipString(version)
+        String result = pythonUtils.applyPythonVersion('pip', version)
 
         assert result == expected
     }

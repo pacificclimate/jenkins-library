@@ -28,7 +28,8 @@ def call(String imageName, ArrayList requirementsFiles, String pytestArgs, Map o
     Map args = utils.getUpdatedArgs(defaults, options)
 
     // set up some items used in the commands below
-    String pip = pytils.getPipString(args.pythonVersion)
+    String pip = pytils.applyPythonVersion('pip', args.pythonVersion)
+    String python = pytils.applyPythonVersion('python', args.pythonVersion)
     String containerDataArgs = dockerUtils.getContainerArgs(args.containerData)
 
     withDockerServer([uri: args.serverUri]) {
@@ -44,7 +45,7 @@ def call(String imageName, ArrayList requirementsFiles, String pytestArgs, Map o
             }
 
             if (args.buildDocs) {
-                pytils.buildDocs()
+                pytils.buildDocs(python)
             }
 
             pytils.runPytest(pytestArgs)
