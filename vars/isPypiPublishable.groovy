@@ -10,6 +10,6 @@ def call() {
     GitUtils gitUtils = new GitUtils(this)
     Utils utils = new Utils(this)
 
-    def tags = gitUtils.isCommitTagged()
+    ArrayList tags = gitUtils.isCommitTagged()
     return utils.isPublishable(BRANCH_NAME, tags)
 }
