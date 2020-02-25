@@ -20,9 +20,7 @@ class DockerUtils implements Serializable {
 
     String formatDockerString(String str, String replacement = '-') {
         for (String illegalChar : Global.constants.illegalDockerChars) {
-            if (str.contains(illegalChar)) {
-                str = str.replaceAll(illegalChar, replacement)
-            }
+            str = str.replaceAll(illegalChar, replacement)
         }
 
         return str
@@ -47,7 +45,7 @@ class DockerUtils implements Serializable {
         for (String tag : tags) {
             formatted.add(formatDockerString(tag))
         }
-        
+
         return formatted
     }
 
