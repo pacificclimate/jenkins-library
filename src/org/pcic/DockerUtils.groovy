@@ -1,37 +1,52 @@
 package org.pcic
 
 import org.pcic.util.Utils
+import org.pcic.GitUtils
+import org.pcic.util.Global
+
 
 class DockerUtils implements Serializable {
     def steps
+    def utils
 
     DockerUtils(steps) {
         this.steps = steps
+        this.utils = new Utils(steps)
     }
 
-    void removeImage(String imageName) {
-        steps.sh(script: "docker rmi ${imageName}")
+    void removeImage(String image) {
+        steps.sh(script: "docker rmi ${image}")
     }
 
-    String buildImageName(String suffix) {
-        if (suffix.contains('/')) {
-            throw new Exception("Image name suffix: ${suffix} cannot contain `/` character")
+    String formatDockerString(String str, String replacement = '-') {
+        for (String illegalChar : Global.constants.illegalDockerChars) {
+            str = str.replaceAll(illegalChar, replacement)
         }
-        return steps.env.BASE_REGISTRY + suffix
+
+        return str
     }
 
-    ArrayList determineTags(String branchName, ArrayList gitTags) {
-        Utils utils = new Utils(steps)
-        ArrayList publishTags = []
+    String buildImageName(String registry, String base, String tag) {
+        return formatDockerString(registry) + '/' + formatDockerString(base) + ":" + formatDockerString(tag)
+    }
+
+    ArrayList getTags() {
+        GitUtils gitUtils = new GitUtils(steps)
+        String branchName = utils.getBranchName()
+        ArrayList gitTags = gitUtils.getCommitTags()
+        ArrayList tags = []
 
         if(utils.isPublishable(branchName, gitTags)) {
-            publishTags.addAll(gitTags)
-            publishTags.add('latest')
-        } else {
-            publishTags = [branchName]
+            tags.addAll(gitTags)
+            tags.add('latest')
         }
 
-        return publishTags
+        def formatted = []
+        for (String tag : tags) {
+            formatted.add(formatDockerString(tag))
+        }
+
+        return formatted
     }
 
     String getContainerArgs(String project) {
@@ -44,5 +59,22 @@ class DockerUtils implements Serializable {
         }
 
         return available[project]
+    }
+
+    String getImageId(String imageName) {
+        return steps.sh(script: "docker images --filter=reference=${imageName} --format '{{.ID}}'", returnStdout: true).trim()
+    }
+
+    ArrayList getDeletableImages(imageName) {
+        ArrayList tags = getTags()
+        def matcher = imageName =~ /.*\/.*:/
+        String imageBase = matcher[0]
+        ArrayList deletable = [imageName]
+
+        for (String tag : tags) {
+            deletable.add(imageBase + tag)
+        }
+
+        return deletable
     }
 }

@@ -32,6 +32,8 @@ class Utils implements Serializable {
                         buildArgs: '--pull .',
                         buildDocs: false,
                         containerData: 'default',
+                        dockerRegistry: 'pcic',
+                        dockerTag: getBranchName(),
                         registryUrl: '',
                         serverUri: steps.env.PCIC_DOCKER_DEV01,
                         pipIndexUrl:'https://pypi.pacificclimate.org/simple',
