@@ -28,7 +28,7 @@ class PythonUtils implements Serializable {
     void installRequirements(String pip, ArrayList requirementsFiles) {
         String required = '-r ' + requirementsFiles.join(' -r ')
         steps.sh(script: "${pip} install ${required}")
-        steps.sh(script: "${pip} install -e .")
+        steps.sh(script: "${pip} install .")
     }
 
     void buildDocs(String python) {
