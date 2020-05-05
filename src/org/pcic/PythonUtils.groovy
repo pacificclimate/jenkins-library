@@ -28,7 +28,7 @@ class PythonUtils implements Serializable {
     void installRequirements(String pip, ArrayList requirementsFiles) {
         String required = '-r ' + requirementsFiles.join(' -r ')
         steps.sh(script: "${pip} install ${required}")
-        steps.sh(script: "${pip} install .")
+        // steps.sh(script: "${pip} install .")
     }
 
     void buildDocs(String python) {
@@ -39,5 +39,9 @@ class PythonUtils implements Serializable {
 
     void runPytest(String args) {
         steps.sh(script: "py.test ${args}")
+    }
+
+    void runPytestAlternate(String args) {
+        steps.sh(script: "python -m pytest ${args}")
     }
 }

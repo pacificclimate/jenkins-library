@@ -48,7 +48,8 @@ def call(String imageName, ArrayList requirementsFiles, String pytestArgs, Map o
                 pytils.buildDocs(python)
             }
 
-            pytils.runPytest(pytestArgs)
+            // pytils.runPytest(pytestArgs)
+            pytils.runPytestAlternate(pytestArgs)
         }
     }
 }
