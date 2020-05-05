@@ -24,7 +24,8 @@ def call(String imageName, ArrayList requirementsFiles, String pytestArgs, Map o
     DockerUtils dockerUtils = new DockerUtils(this)
 
     ArrayList defaults = ['serverUri', 'pythonVersion', 'aptPackages',
-                          'buildDocs', 'containerData', 'pipIndexUrl']
+                          'buildDocs', 'containerData', 'pipIndexUrl',
+                          'selfInstall']
     Map args = utils.getUpdatedArgs(defaults, options)
 
     // set up some items used in the commands below
@@ -41,14 +42,14 @@ def call(String imageName, ArrayList requirementsFiles, String pytestArgs, Map o
             }
 
             withEnv(["PIP_INDEX_URL=${args.pipIndexUrl}"]) {
-                pytils.installRequirements(pip, requirementsFiles)
+                pytils.installRequirements(pip, requirementsFiles, args.selfInstall)
             }
 
             if (args.buildDocs) {
                 pytils.buildDocs(python)
             }
 
-            pytils.runPytest(pytestArgs)
+            pytils.runPytest(python, pytestArgs)
         }
     }
 }

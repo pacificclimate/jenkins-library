@@ -25,10 +25,12 @@ class PythonUtils implements Serializable {
         steps.sh(script: "twine upload --repository-url ${pypiUrl} --skip-existing -u ${username} -p ${password} dist/*")
     }
 
-    void installRequirements(String pip, ArrayList requirementsFiles) {
+    void installRequirements(String pip, ArrayList requirementsFiles, boolean selfInstall) {
         String required = '-r ' + requirementsFiles.join(' -r ')
         steps.sh(script: "${pip} install ${required}")
-        steps.sh(script: "${pip} install -e .")
+        if(selfInstall) {
+          steps.sh(script: "${pip} install -e .")
+        }
     }
 
     void buildDocs(String python) {
@@ -37,7 +39,7 @@ class PythonUtils implements Serializable {
         steps.sh(script: "${python} setup.py install")
     }
 
-    void runPytest(String args) {
-        steps.sh(script: "py.test ${args}")
+    void runPytest(String python, String args) {
+        steps.sh(script: "${python} -m pytest ${args}")
     }
 }
